@@ -1,0 +1,75 @@
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>查詢預購系統</title>
+        </head>
+        <style>
+            @font-face 
+            {
+                font-family: Hua;
+                src:local("wordType.ttc"), 
+                    url(wordType.ttc);
+            }
+            body
+            {
+                background-size:100% 100%;
+            }
+
+            table,td 
+            {
+                border: 1px solid #333;
+            }
+
+            thead,tfoot 
+            {
+                background-color: #333;
+                color: #fff;
+            }
+            
+            .flex
+            {
+                margin: auto;
+                width:max-content;
+                font-size: larger;
+            }
+
+        </style>
+        <script src="./js/jquery-3.5.1.min.js"></script>
+        <body background="http://k34425707.lovestoblog.com/picture/bgph.png" style="font-size:30px">
+            <div class="flex">
+                <p>輸入使用者帳號:<input type="text" id="user"><button type="button" onclick="inquire()">查詢</button></p>
+                <p id="current" >當前查詢帳號:</p>
+            </div>
+            <section class="flex">
+                <table id="list" style="font-size:30px">
+                    <tbody>
+                        <tr>
+                            <td>數量</td>
+                            <td style="text-align: center; width:3cm;">單價</td>
+                            <td style="text-align: center; width:20cm;">書名</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        
+        </body>
+        <script>
+            function inquire()
+            {
+                document.getElementById("current").innerHTML="當前查詢帳號:"+document.getElementById("user").value;
+                $.ajax({
+                    method: "GET",
+                    url: "./backend/response.php?name="+document.getElementById("user").value,
+                    success: function(res) 
+                    {  
+                        console.log(res);
+                        document.getElementById("list").innerHTML='<tbody><tr><td>數量</td><td style="text-align: center; width:3cm;">單價</td><td style="text-align: center; width:20cm;">                         書名</td></tr>'
+                        +res+"</tbody>";
+                    }
+                    }).done(function(msg){
+                        console.log("Ok");
+                    });
+
+            }
+        </script>
+    </html>
